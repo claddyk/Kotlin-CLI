@@ -1,9 +1,9 @@
 plugins {
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.8.21"
     application
 }
 
-group = "org.example"
+group = "me.claddy"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -12,7 +12,6 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.github.ajalt.clikt:clikt:3.5.2")
 }
 
 tasks.test {
