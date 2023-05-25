@@ -21,6 +21,8 @@ dependencies {
     implementation("io.ktor:ktor-client-json:2.3.0")
     implementation("io.ktor:ktor-client-serialization:2.3.0")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.0")
+
 
 
 }

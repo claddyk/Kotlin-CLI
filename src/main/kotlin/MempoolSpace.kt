@@ -2,13 +2,9 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
-
-@Serializable
-data class BlockIds(val id: String)
+import io.ktor.serialization.kotlinx.json.*
 
 suspend fun getBlockIds(startHeight: Int): BlockIds {
     val client = HttpClient(CIO) {
@@ -16,8 +12,8 @@ suspend fun getBlockIds(startHeight: Int): BlockIds {
             json(Json { ignoreUnknownKeys = true })
         }
     }
-    val response = client.get<String>("https://mempool.space/api/v1/blocks/$startHeight")
-    return Json.decodeFromString(response)
+    val response = client.get("https://mempool.space/api/v1/blocks/$startHeight")
+    return Json.decodeFromString(response.toString())
 }
 
 suspend fun getTxIds(id: String): List<String> {
@@ -26,6 +22,6 @@ suspend fun getTxIds(id: String): List<String> {
             json(Json { ignoreUnknownKeys = true })
         }
     }
-    val response = client.get<String>("https://mempool.space/api/block/$id/txids")
-    return Json.decodeFromString(response)
+    val response = client.get("https://mempool.space/api/block/$id/txids")
+    return Json.decodeFromString(response.toString())
 }

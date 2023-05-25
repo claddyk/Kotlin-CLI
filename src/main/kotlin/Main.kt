@@ -1,7 +1,6 @@
 import kotlinx.cli.*
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
-import java.lang.Exception
 
 suspend fun main(args: Array<String>) {
     val parser = ArgParser("cli-tool")
