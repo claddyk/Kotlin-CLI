@@ -1,7 +1,20 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import kotlinx.cli.*
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+import java.lang.Exception
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+suspend fun main(args: Array<String>) {
+    val parser = ArgParser("cli-tool")
+    val startHeight by parser.option(ArgType.Int, shortName = "s", description = "The start height").required()
+
+    parser.parse(args)
+
+    try {
+        val blockIds = getBlockIds(startHeight)
+        val txIds = getTxIds(blockIds.id)
+        val txIdsJson = Json.encodeToString(TxIds(txIds))
+        println(txIdsJson)
+    } catch (e: Exception) {
+        println("Error: ${e.message}")
+    }
 }
