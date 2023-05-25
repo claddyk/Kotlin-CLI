@@ -10,7 +10,7 @@ suspend fun main(args: Array<String>) {
 
     try {
         val blockIds = getBlockIds(startHeight)
-        val txIds = getTxIds(blockIds.id)
+        val txIds = getTxIds(blockIds.data.id)
         val txIdsJson = Json.encodeToString(TxIds(txIds))
         println(txIdsJson)
     } catch (e: Exception) {
