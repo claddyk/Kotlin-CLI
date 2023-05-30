@@ -11,7 +11,7 @@ suspend fun main(args: Array<String>) {
     try {
         val blockIds = getBlockIds(startHeight)
         val txIds = getTxIds(blockIds.data.id)
-        val txIdsJson = Json.encodeToString(TxIds(txIds))
+        val txIdsJson = Json.encodeToString(TxIds())
         println(txIdsJson)
     } catch (e: Exception) {
         println("Error: ${e.message}")

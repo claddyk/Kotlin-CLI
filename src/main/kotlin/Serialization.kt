@@ -1,5 +1,5 @@
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class BlockIds(val id: String)
-data class TxIds(val id: List<String>)
+data class TxIds(val id: String)
