@@ -1,7 +1,15 @@
+import kotlinx.cli.*
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
+import kotlinx.cli.required
 import kotlinx.coroutines.runBlocking
 
 fun main(args: Array<String>) = runBlocking() {
-    val firstId = fetchFirstBlockId(730000)
+    val parser = ArgParser("kotlin-cli")
+    val startHeight by parser.option(ArgType.Int, shortName = "s", description = "Start Height").required()
 
-    println(firstId)
+    parser.parse(args)
+
+    val blockIds = fetchFirstBlockId(startHeight)
+    println(blockIds)
 }
