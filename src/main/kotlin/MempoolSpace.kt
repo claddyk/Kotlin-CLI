@@ -6,7 +6,7 @@ import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.*
 
-suspend fun fetchBlocks(startHeight: Int): Block {
+suspend fun fetchBlocks(startHeight: Int): Block? {
     val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
@@ -16,5 +16,10 @@ suspend fun fetchBlocks(startHeight: Int): Block {
             })
         }
     }
-    return client.get("https://mempool.space/api/v1/blocks/$startHeight").body<Block>()
+    return try {
+        client.get("https://mempool.space/api/v1/blocks/$startHeight").body<Block>()
+    } catch (e: Throwable) {
+        println(e.message)
+        null
+    }
 }

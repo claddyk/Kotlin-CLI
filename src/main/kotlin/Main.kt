@@ -7,6 +7,6 @@ import kotlinx.serialization.json.Json
 
 
 fun main() = runBlocking{
-    val block = fetchBlocks(1)
+    val block = fetchBlocks(73000)
     println(block)
 }
