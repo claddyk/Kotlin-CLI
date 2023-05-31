@@ -12,4 +12,7 @@ fun main(args: Array<String>) = runBlocking() {
 
     val blockIds = fetchFirstBlockId(startHeight)
     println(blockIds)
+
+    val txid = fetchTransactionId(blockIds)
+    println(txid)
 }
