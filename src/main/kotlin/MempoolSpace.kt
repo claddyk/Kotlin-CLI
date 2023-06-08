@@ -6,8 +6,8 @@ import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-suspend fun fetchFirstBlockId(startHeight: Int): String {
-    val client = HttpClient(CIO) {
+class MempoolClient {
+    private val httpClient = HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
@@ -17,18 +17,17 @@ suspend fun fetchFirstBlockId(startHeight: Int): String {
         }
     }
 
-    val response = client.get("https://mempool.space/api/v1/blocks/$startHeight").body<List<Block>>().first()
-    return response.id
-}
-suspend fun fetchTransactionId(blockIds: String): Array<String> {
-    val client = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-            })
+    suspend fun fetchFirstBlockId(startHeight: Int): Result<String> {
+        val response = httpClient.get("https://mempool.space/api/v1/blocks/$startHeight")
+        return response.runCatching {
+            body<List<Block>>().first().id
         }
     }
-    val response = client.get("https://mempool.space/api/block/$blockIds/txids").body<Array<String>>()
-    return response
+
+    suspend fun fetchTransactionIds(blockId: String): Result<List<String>> {
+        val response = httpClient.get("https://mempool.space/api/block/$blockId/txids")
+        return response.runCatching {
+            body<List<String>>()
+        }
+    }
 }

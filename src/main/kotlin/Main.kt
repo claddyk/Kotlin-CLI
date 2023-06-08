@@ -14,5 +14,5 @@ fun main(args: Array<String>) = runBlocking() {
     println(blockIds)
 
     val txid = fetchTransactionId(blockIds)
-    println(txid)
+    txid.forEach { println(it) }
 }
